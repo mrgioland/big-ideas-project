@@ -110,12 +110,9 @@ def generate_distortions(imagesLoc, saveLoc, k=3):
                 for f in files:
                     omniFilePath = root + '/' + f
                     originalImg = Image.open(omniFilePath)
-                    saveDir2 = saveDir + '/' + f.split('.')[0]
-                    if not os.path.isdir(saveDir2):
-                        os.makedirs(saveDir2)
-
+                    fname, fend = f.split('.')
                     for j in range(0, k):
-                        distortedImgLoc = saveDir2 + '/' + str(j) + '.' + f.split('.')[1]
+                        distortedImgLoc = saveDir + '/' + fname + '_' + str(j) + '.' + fend
                         distortedImg = affine_distortions(originalImg)
                         distortedImg.save(distortedImgLoc)
 
@@ -125,6 +122,6 @@ def generate_distortions(imagesLoc, saveLoc, k=3):
 
 if __name__ == '__main__':
     set_k = 2
-    transformationSaveLocation = 'affineTransform'
-    omniLoc = 'omniglot/python'
+    transformationSaveLocation = './affineTransform'
+    omniLoc = './omniglot/python'
     generate_distortions(omniLoc, transformationSaveLocation, set_k)
