@@ -1,17 +1,10 @@
 import random
-import matplotlib.pyplot as plt
 from PIL import Image, ImageOps
 import os
 
 
 def affine_distortions(img):
     width, height = img.size
-
-    plot_set = 0
-    if plot_set:
-        # plt.imshow(img, cmap="gray")
-        plt.imshow(img)
-        plt.show()
 
     #Sheer Horizontal
     if random.uniform(0, 1) > 0.5:
@@ -29,11 +22,6 @@ def affine_distortions(img):
         img = img.transform(img.size, Image.AFFINE, (1, 0, 0, rho_y, 1, 0))
         img = ImageOps.invert(img.convert('RGB'))
 
-    if plot_set:
-        plt.title("Sheer")
-        plt.imshow(img)
-        plt.show()
-
     #Scale X
     if random.uniform(0, 1) > 0.5:
         s_x = random.uniform(0.8, 1.2)
@@ -50,20 +38,10 @@ def affine_distortions(img):
     img = img.resize((round(s_x * img.size[0]), round(s_y * img.size[1])))
     img = ImageOps.invert(img.convert('RGB'))
 
-    if plot_set:
-        plt.title("Scale")
-        plt.imshow(img, cmap="gray")
-        plt.show()
-
     #Rotate Image
     if random.uniform(0, 1) > 0.5:
         theta = random.uniform(-10.0, 10.0)
         img = img.rotate(theta, expand=1, fillcolor=(255, 255, 255))
-
-    if plot_set:
-        plt.title("Rotate")
-        plt.imshow(img, cmap="gray")
-        plt.show()
 
     #Translate X
     if random.uniform(0, 1) > 0.5:
@@ -79,20 +57,11 @@ def affine_distortions(img):
         img = img.transform(img.size, Image.AFFINE, (1, 0, 0, 0, 1, t_y))
         img = ImageOps.invert(img.convert('RGB'))
 
-    if plot_set:
-        plt.title("Translate")
-        plt.imshow(img, cmap="gray")
-        plt.show()
-
     #Crop to final size
     img = ImageOps.invert(img.convert('RGB'))
     img = img.crop((0, 0, width, height))
     img = ImageOps.invert(img.convert('RGB'))
 
-    if plot_set:
-        plt.title("Final")
-        plt.imshow(img, cmap="gray")
-        plt.show()
     return img
 
 
